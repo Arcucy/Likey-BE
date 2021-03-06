@@ -1,0 +1,39 @@
+{
+  "name": "growth-be",
+  "version": "1.0.0",
+  "description": "Backbone for Growth Platform",
+  "main": "app.js",
+  "repository": "https://github.com/Arcucy/Growth-BE.git",
+  "author": "Ayaka Neko <neko@ayaka.moe>",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "@elastic/elasticsearch": "^7.10.0",
+    "arweave": "^1.10.0",
+    "axios": "^0.21.1",
+    "egg": "^2.29.1",
+    "egg-cors": "^2.2.3",
+    "egg-multipart": "^2.10.3",
+    "egg-mysql": "^3.0.0",
+    "egg-redis": "^2.4.0",
+    "egg-scripts": "^2.13.0",
+    "file-type": "^16.1.0",
+    "form-data": "^3.0.0",
+    "js-zip": "^1.0.1",
+    "moment": "^2.29.1"
+  },
+  "devDependencies": {
+    "egg-bin": "^4.15.0",
+    "egg-ci": "^1.18.0",
+    "egg-mock": "^4.0.1",
+    "eslint": "^7.16.0",
+    "eslint-config-egg": "^9.0.0"
+  },
+  "scripts": {
+    "start": "egg-scripts start --port=7653 --daemon --title=growth-be",
+    "serve": "egg-scripts start ",
+    "stop": "egg-scripts stop --title=egg-server-example",
+    "dev": "egg-bin dev",
+    "debug": "egg-bin debug"
+  }
+}
