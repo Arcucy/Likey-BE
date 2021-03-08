@@ -44,6 +44,13 @@ module.exports = {
     finishCheckFailed: 20200,
     fileMismatchedAnnouncedTxId: 20300,
   },
+
+  // Authentication Error
+  auth: {
+    signVerifyFailed: 30100,
+    accountHasBeenRegistered: 30100,
+  },
+
   wrongMusicType: 10101,
 
   returnObj(lang) {
@@ -69,6 +76,10 @@ module.exports = {
       uploadFileWriteFailed: { code: this.io.fileWriteError, message: 'Upload File Write Failed' },
       uploadDirectoryCreationFailed: { code: this.io.directoryCreationError, message: 'Upload Directory Creation Failed' },
       wrongMusicType: { code: this.wrongMusicType, message: 'Wrong music type' },
+
+      // Authentication Error
+      authSignVerifyFailed: { code: this.auth.signVerifyFailed, message: 'Signature verification failed' },
+      authAccountHasBeenRegistered: { code: this.auth.accountHasBeenRegistered, message: 'Account has been registered' },
     }
 
     const zh = {
@@ -92,6 +103,10 @@ module.exports = {
       uploadFileWriteFailed: { code: this.io.fileWriteError, message: '上传文件写入错误' },
       uploadDirectoryCreationFailed: { code: this.io.directoryCreationError, message: '上传路径创建失败' },
       wrongMusicType: { code: this.wrongMusicType, message: '查询失败，错误的音乐类型' },
+
+      // Authentication Error
+      authSignVerifyFailed: { code: this.auth.signVerifyFailed, message: '签名验证失败' },
+      authAccountHasBeenRegistered: { code: this.auth.accountHasBeenRegistered, message: '账号已被注册' },
     }
 
     let message
@@ -105,7 +120,7 @@ module.exports = {
         message = zh
         break
       default:
-        message = zh
+        message = en
         break
     }
 
