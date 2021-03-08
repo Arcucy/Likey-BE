@@ -11,6 +11,7 @@
     "@elastic/elasticsearch": "^7.10.0",
     "arweave": "^1.10.0",
     "axios": "^0.21.1",
+    "base64-js": "^1.5.1",
     "egg": "^2.29.1",
     "egg-cors": "^2.2.3",
     "egg-multipart": "^2.10.3",
@@ -20,7 +21,9 @@
     "file-type": "^16.1.0",
     "form-data": "^3.0.0",
     "js-zip": "^1.0.1",
-    "moment": "^2.29.1"
+    "jwk-to-pem": "^2.0.4",
+    "moment": "^2.29.1",
+    "pem-jwk": "^2.0.0"
   },
   "devDependencies": {
     "egg-bin": "^4.15.0",
