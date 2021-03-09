@@ -48,13 +48,14 @@ module.exports = {
   // Authentication Error
   auth: {
     signVerifyFailed: 30100,
-    accountHasBeenRegistered: 30100,
+    accountHasBeenRegistered: 30200,
   },
 
   wrongMusicType: 10101,
 
   returnObj(lang) {
 
+    /** 英文 */
     const en = {
       lang: 'en',
       success: { code: this.success, message: 'success' },
@@ -82,6 +83,7 @@ module.exports = {
       authAccountHasBeenRegistered: { code: this.auth.accountHasBeenRegistered, message: 'Account has been registered' },
     }
 
+    /** 中文 */
     const zh = {
       lang: 'zh',
       success: { code: this.success, message: '成功' },
@@ -111,12 +113,17 @@ module.exports = {
 
     let message
 
+    // 将 lang 转换为全小写
+    if (lang && typeof lang === 'string') lang = lang.toLowerCase()
+
+    // 请在这个 switch 处配置语言名称 和 message 的对应关系
     switch (lang) {
       case 'en':
         message = en
         break
       case 'zh':
-      case 'zh-Hans':
+      case 'zh-cn':
+      case 'zh-hans':
         message = zh
         break
       default:
@@ -124,6 +131,10 @@ module.exports = {
         break
     }
 
+    /**
+     * 通过错误代码获取 msg
+     * @param {Number} code 错误代码
+     */
     message.get = function(code) {
       const _this = this
       const keys = Object.keys(_this)
