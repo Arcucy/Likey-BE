@@ -12,16 +12,16 @@ class AuthService extends Service {
   arSign(pub, signature, data) {
     // 校验签名
     const isPassed = this.ctx.jwt.verifyMessage(pub, signature, data)
-    if (!isPassed) return null
+    if (!isPassed) throw 'authSignVerifyFailed'
 
     const dataObj = JSON.parse(data)
     const address = this.ctx.jwt.getAddressFromPub(pub)
     // 校验地址
-    if (dataObj.address !== address) return null
+    if (dataObj.address !== address) throw 'authSignVerifyFailed'
 
     // 校验时间，签名时间与当前服务器时间的差超过 1 小时的，不予通过
-    // const jetLag = Math.abs(Date.now() - dataObj.timestamp)
-    // if (jetLag > 3600000) return null
+    const jetLag = Math.abs(Date.now() - dataObj.timestamp)
+    if (jetLag > 3600000) throw 'authSignHasExpired'
     return address
   }
 

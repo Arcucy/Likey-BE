@@ -49,6 +49,7 @@ module.exports = {
   auth: {
     signVerifyFailed: 30100,
     accountHasBeenRegistered: 30200,
+    signHasExpired: 30300,
   },
 
   wrongMusicType: 10101,
@@ -81,6 +82,7 @@ module.exports = {
       // Authentication Error
       authSignVerifyFailed: { code: this.auth.signVerifyFailed, message: 'Signature verification failed' },
       authAccountHasBeenRegistered: { code: this.auth.accountHasBeenRegistered, message: 'Account has been registered' },
+      authSignHasExpired: { code: this.auth.signHasExpired, message: 'Signature has expired' },
     }
 
     /** 中文 */
@@ -109,6 +111,7 @@ module.exports = {
       // Authentication Error
       authSignVerifyFailed: { code: this.auth.signVerifyFailed, message: '签名验证失败' },
       authAccountHasBeenRegistered: { code: this.auth.accountHasBeenRegistered, message: '账号已被注册' },
+      authSignHasExpired: { code: this.auth.signHasExpired, message: '签名已过期' },
     }
 
     let message

@@ -11,5 +11,5 @@ module.exports = app => {
   router.post('/upload/finish', passport.verify, controller.upload.finish)
 
   /** auth */
-  router.post('/auth/ar-jwk-sign', passport.verify, controller.auth.arSignLogin)
+  router.post('/auth/ar-jwk-sign', passport.verify, controller.auth.arJwkSignLogin)
 }

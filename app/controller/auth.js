@@ -5,7 +5,7 @@ const moment = require('moment')
 
 class AuthController extends Controller {
   // Arweave 签名验证登陆
-  async arSignLogin() {
+  async arJwkSignLogin() {
     const ctx = this.ctx
     const { pub, signature, data } = ctx.request.body
     if (!pub || !signature || !data) {
@@ -14,7 +14,13 @@ class AuthController extends Controller {
     }
 
     // 验证签名，返回钱包地址
-    const address = this.service.auth.arSign(pub, signature, data)
+    let address = ''
+    try {
+      address = this.service.auth.arSign(pub, signature, data)
+    } catch (err) {
+      ctx.body = this.ctx.helper.getMsgByThrowErr(err, ctx.msg)
+      return
+    }
     if (!address) {
       ctx.body = ctx.msg.authSignVerifyFailed
       return
@@ -37,18 +43,16 @@ class AuthController extends Controller {
           platform: platformType.arweave,
           index: address,
         })
-      } catch (e) {
-        const body = ctx.msg[e]
-        if (body) {
-          ctx.body = body
-          return
-        }
-        throw e
+      } catch (err) {
+        ctx.body = this.ctx.helper.getMsgByThrowErr(err, ctx.msg)
+        return
       }
     }
-
+    if (!userId) {
+      ctx.body = ctx.msg.failure
+      return
+    }
     const jwt = this.service.auth.jwtSign(userId, platformType.arweave)
-
     ctx.body = {
       ...ctx.msg.success,
       userId,
