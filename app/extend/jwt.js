@@ -1,38 +1,23 @@
 const crypto = require('crypto')
-const jwkToPem = require('jwk-to-pem')
-const pem2jwk = require('pem-jwk').pem2jwk
+const rsa = require('js-crypto-rsa')
 const B64js = require('base64-js')
+
+// 字符串转换为 Uint8Array
+const encoder = new TextEncoder()
+const hashAlgorithm = 'SHA-256'
 
 /**
  * 用来签名的小工具
  */
 module.exports = {
   /**
-   * 将 jwk 转换为 PEM 格式的 RSA 密钥
-   * @param {Object} input jwk 对象
-   * @param {*} mode 输出模式：['private': 私钥, 'public': 公钥]
-   */
-  toPem(input, mode) {
-    let key = ''
-    if (mode === 'private') {
-      key = jwkToPem(input, { private: true })
-    } else if (mode === 'public') {
-      key = jwkToPem(input)
-    }
-    return key
-  },
-
-  /**
    * 对数据签名，输入私钥，客户端
-   * @param {String} pri - 私钥
+   * @param {String} key - jwk 格式私钥
    * @param {String} data - 需要签名的数据
    */
-  signMessage(pri, data) {
-    // 创建签名
-    const sign = crypto.createSign('sha384')
-    sign.update(data)
-    const signature = sign.sign(pri, 'hex')
-    return signature
+  async signMessage(key, data) {
+    const sign = await rsa.sign(encoder.encode(data), key, hashAlgorithm)
+    return sign
   },
 
   /**
@@ -41,10 +26,9 @@ module.exports = {
    * @param {String} signature - signMessage 获得的签名数据
    * @param {String} data - 之前签名的数据
    */
-  verifyMessage(pub, signature, data) {
-    const verify = crypto.createVerify('sha384')
-    verify.update(data)
-    return verify.verify(pub, signature, 'hex')
+  async verifyMessage(pub, signature, data) {
+    const res = await rsa.verify(encoder.encode(data), Buffer.from(signature, 'hex'), this.buildPubJWK(pub), hashAlgorithm)
+    return res
   },
 
   /**
@@ -52,10 +36,21 @@ module.exports = {
    * @param {String} pub - 公钥
    */
   getAddressFromPub(pub) {
-    const owner = pem2jwk(pub).n
     return bufferTob64Url(
-      hash(b64UrlToBuffer(owner))
+      hash(b64UrlToBuffer(pub))
     )
+  },
+
+  /**
+   * 从 JWK n 字段构建 JWK
+   * @param {*} pubField  - JWK 公钥字段 n
+   */
+  buildPubJWK(pubField) {
+    return {
+      kty: 'RSA',
+      e: 'AQAB',
+      n: pubField,
+    }
   },
 }
 

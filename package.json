@@ -20,11 +20,10 @@
     "egg-scripts": "^2.13.0",
     "file-type": "^16.1.0",
     "form-data": "^3.0.0",
+    "js-crypto-rsa": "^1.0.0",
     "js-zip": "^1.0.1",
-    "jwk-to-pem": "^2.0.4",
     "jwt-simple": "^0.5.6",
-    "moment": "^2.29.1",
-    "pem-jwk": "^2.0.0"
+    "moment": "^2.29.1"
   },
   "devDependencies": {
     "egg-bin": "^4.15.0",
