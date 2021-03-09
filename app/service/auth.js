@@ -9,9 +9,9 @@ const moment = require('moment')
 // }
 
 class AuthService extends Service {
-  arSign(pub, signature, data) {
+  async arSign(pub, signature, data) {
     // 校验签名
-    const isPassed = this.ctx.jwt.verifyMessage(pub, signature, data)
+    const isPassed = await this.ctx.jwt.verifyMessage(pub, signature, data)
     if (!isPassed) throw 'authSignVerifyFailed'
 
     const dataObj = JSON.parse(data)

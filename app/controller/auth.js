@@ -4,19 +4,19 @@ const { platformType } = require('../constant/Enums')
 const moment = require('moment')
 
 class AuthController extends Controller {
-  // Arweave 签名验证登陆
+  /** Arweave 签名验证登陆 */
   async arJwkSignLogin() {
     const ctx = this.ctx
+    console.log('曲奇🍪 ：', ctx.cookies.get('session_token'))
     const { pub, signature, data } = ctx.request.body
     if (!pub || !signature || !data) {
       ctx.body = ctx.msg.paramsError
       return
     }
-
     // 验证签名，返回钱包地址
     let address = ''
     try {
-      address = this.service.auth.arSign(pub, signature, data)
+      address = await this.service.auth.arSign(pub, signature, data)
     } catch (err) {
       ctx.body = this.ctx.helper.getMsgByThrowErr(err, ctx.msg)
       return
@@ -44,7 +44,7 @@ class AuthController extends Controller {
           index: address,
         })
       } catch (err) {
-        ctx.body = this.ctx.helper.getMsgByThrowErr(err, ctx.msg)
+        ctx.body = ctx.helper.getMsgByThrowErr(err, ctx.msg)
         return
       }
     }
@@ -52,12 +52,18 @@ class AuthController extends Controller {
       ctx.body = ctx.msg.failure
       return
     }
+
+    // 生成 jwt
     const jwt = this.service.auth.jwtSign(userId, platformType.arweave)
+    // 登录成功，返回数据
     ctx.body = {
       ...ctx.msg.success,
-      userId,
-      isNewUser,
-      jwt,
+      data: {
+        isNewUser,
+        userId,
+        platform: platformType.arweave,
+        jwt,
+      },
     }
   }
 }
