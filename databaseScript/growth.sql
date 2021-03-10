@@ -10,7 +10,7 @@
  Target Server Version : 100507
  File Encoding         : 65001
 
- Date: 08/03/2021 23:46:34
+ Date: 10/03/2021 16:20:08
 */
 
 SET NAMES utf8mb4;
@@ -28,7 +28,7 @@ CREATE TABLE `user_accounts` (
   `key` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '用来进行身份验证的必要信息，如 password',
   `other` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '其它辅助信息，如 username',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Table structure for users
@@ -44,6 +44,6 @@ CREATE TABLE `users` (
   `website` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '个人/乐队网站',
   `create_time` datetime NOT NULL COMMENT '注册时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin ROW_FORMAT=DYNAMIC;
 
 SET FOREIGN_KEY_CHECKS = 1;
