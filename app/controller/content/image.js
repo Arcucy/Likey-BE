@@ -4,26 +4,29 @@ const fs = require('mz/fs')
 const Controller = require('egg').Controller
 
 class ContantImageController extends Controller {
-  async cover() {
+  async image() {
     const { ctx } = this
-    let res = await this.app.db.growth.query(`SELECT cover_type FROM single WHERE cover = '${ctx.params.tx}';`)
-    res = JSON.parse(JSON.stringify(res))
+    const { subpath } = ctx.params
 
-    if (res.length === 0) {
-      ctx.body = ctx.msg.fileNotFound
-      return
+    if (!(subpath.contains('.') && subpath.split('.').length > 1)) {
+      ctx.status = 404
+      ctx.body = 'Resource Not Found'
     }
 
-    const type = res[0].cover_type
+    const ext = subpath.split('.').pop()
+    if (Object.keys(getType).indexOf(ext) === -1) {
+      ctx.status = 400
+      ctx.body = 'Resource Invalid'
+    }
 
-    const getExt = {
-      'image/png': '.png',
-      'image/jpeg': '.jpg',
-      'image/webp': '.webp',
+    const getType = {
+      '.png': 'image/png',
+      '.jpg': 'image/jpeg',
+      '.webp': 'image/webp'
     }
 
     ctx.type = type
-    ctx.body = fs.readFileSync('./content/cover/' + ctx.params.tx + getExt[type])
+    ctx.body = fs.readFileSync('./content/image/' + subpath + getType[ext])
   }
 }
 
