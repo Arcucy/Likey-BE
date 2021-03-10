@@ -20,4 +20,8 @@ module.exports = app => {
 
   /** auth */
   router.post('/auth/ar-jwk-sign', passport.verify, controller.auth.arJwkSignLogin)
+
+  /** user */
+  router.get('/user/info', passport.authorize, controller.user.get)
+  router.get('/user/info/:id', passport.verify, controller.user.get)
 }

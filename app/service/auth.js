@@ -9,6 +9,12 @@ const moment = require('moment')
 // }
 
 class AuthService extends Service {
+  /**
+   * 验证 AR 的 JWK 签名
+   * @param {*} pub 公钥
+   * @param {*} signature 签名
+   * @param {*} data 被签名的数据
+   */
   async arSign(pub, signature, data) {
     // 校验签名
     const isPassed = await this.ctx.jwt.verifyMessage(pub, signature, data)
@@ -25,7 +31,11 @@ class AuthService extends Service {
     return address
   }
 
-  // jwt token
+  /**
+   * 生成 JSON Web Token
+   * @param {Number} userId 用户 ID
+   * @param {platformType} platform 登录平台
+   */
   jwtSign(userId, platform) {
     const expires = moment().utc().add(7, 'days')
       .valueOf()
