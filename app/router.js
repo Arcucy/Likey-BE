@@ -6,6 +6,10 @@ module.exports = app => {
   // API 的数据返回格式请遵守 “{ code: 0, message: 'success', data: 「数据」 }” 格式
   // 对于返回分页数据的，在 data 内返回 “{ list: 「列表」, count: 「总数」 }”
 
+  // 关于接口的权限管理：
+  // verify:      不需要登录，如果登录会解析 token
+  // authorize:   必须登录，未登返回 401
+
   const { router, controller } = app
   router.get('/', passport.verify, controller.home.index)
 
