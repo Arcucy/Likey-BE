@@ -14,9 +14,9 @@ class ContantImageController extends Controller {
     }
 
     const getType = {
-      '.png': 'image/png',
-      '.jpg': 'image/jpeg',
-      '.webp': 'image/webp'
+      'png': 'image/png',
+      'jpg': 'image/jpeg',
+      'webp': 'image/webp'
     }
 
     const ext = subpath.split('.').pop()
