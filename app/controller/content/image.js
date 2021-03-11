@@ -13,16 +13,16 @@ class ContantImageController extends Controller {
       ctx.body = 'Resource Not Found'
     }
 
-    const ext = subpath.split('.').pop()
-    if (Object.keys(getType).indexOf(ext) === -1) {
-      ctx.status = 400
-      ctx.body = 'Resource Invalid'
-    }
-
     const getType = {
       '.png': 'image/png',
       '.jpg': 'image/jpeg',
       '.webp': 'image/webp'
+    }
+
+    const ext = subpath.split('.').pop()
+    if (Object.keys(getType).indexOf(ext) === -1) {
+      ctx.status = 400
+      ctx.body = 'Resource Invalid'
     }
 
     ctx.type = type
